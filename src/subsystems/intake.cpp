@@ -5,17 +5,17 @@
 
 namespace Intake{
   int intake_state = OFF;
-  int long_goal_state = OFF;
-  int center_goal_state = OFF;
+  int long_state = OFF;
+  int center_state = OFF;
   void toggle(){
     if(intake_state == FWD){
       set_intake(OFF);
-      set_long_goal(OFF);
-      set_center_goal(OFF);
+      set_long(OFF);
+      set_center(OFF);
     }else{
       set_intake(FWD);
-      set_long_goal(FWD);
-      set_center_goal(FWD);
+      set_long(FWD);
+      set_center(FWD);
     }
   }
 
@@ -31,28 +31,28 @@ namespace Intake{
       intake_state = OFF;
     }
   }
-  void set_long_goal(int state){
+  void set_long(int state){
     if(state == FWD){
-      long_goal_motor.move_velocity(200);
-      long_goal_state = FWD;
+      long_motor.move_velocity(200);
+      long_state = FWD;
     }else if(state == REV){
-      long_goal_motor.move_velocity(-200);
-      long_goal_state = REV;
+      long_motor.move_velocity(-200);
+      long_state = REV;
     }else{
-      long_goal_motor.move_velocity(0);
-      long_goal_state = OFF;
+      long_motor.move_velocity(0);
+      long_state = OFF;
     }
   }
-  void set_center_goal(int state){
+  void set_center(int state){
     if(state == FWD){
-      center_goal_motor.move_velocity(200);
-      center_goal_state = FWD;
+      center_motor.move_velocity(200);
+      center_state = FWD;
     }else if(state == REV){
-      center_goal_motor.move_velocity(-200);
-      center_goal_state = REV;
+      center_motor.move_velocity(-200);
+      center_state = REV;
     }else{
-      center_goal_motor.move_velocity(0);
-      center_goal_state = OFF;
+      center_motor.move_velocity(0);
+      center_state = OFF;
     }
   }
 }

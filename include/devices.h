@@ -6,7 +6,7 @@
 
 extern pros::Controller master;
 
-extern pros::Motor long_goal_motor;
-extern pros::Motor center_goal_motor;
+extern pros::Motor long_motor;
+extern pros::Motor center_motor;
 extern pros::Motor intake_motor;
 #endif

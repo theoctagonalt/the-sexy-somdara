@@ -7,8 +7,8 @@
 void opcontrol(){
   int game_time = 0;
   Intake::set_intake(OFF);
-  Intake::set_center_goal(OFF);
-  Intake::set_long_goal(OFF);
+  Intake::set_center(OFF);
+  Intake::set_long(OFF);
 
   while(true){
     if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R1)){
