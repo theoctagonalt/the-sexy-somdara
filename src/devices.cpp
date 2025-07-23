@@ -1,17 +1,17 @@
 #include "main.h"
 #include "lemlib/api.hpp"
 
-#define LONG_MOTOR -1
-#define CENTER_MOTOR 2
-#define INTAKE_MOTOR 3
+#define LONG_MOTOR -17
+#define CENTER_MOTOR 5
+#define INTAKE_MOTOR 9
 
-#define LEFT_FRONT_MOTOR 4
-#define LEFT_BACK_MOTOR 5
-#define LEFT_MIDDLE_MOTOR 6
+#define LEFT_FRONT_MOTOR 8
+#define LEFT_BACK_MOTOR -1
+#define LEFT_MIDDLE_MOTOR -7
 
-#define RIGHT_FRONT_MOTOR 7
-#define RIGHT_BACK_MOTOR 8
-#define RIGHT_MIDDLE_MOTOR 9
+#define RIGHT_FRONT_MOTOR -20
+#define RIGHT_BACK_MOTOR 18
+#define RIGHT_MIDDLE_MOTOR 19
 
 #define INERTIAL 10
 

@@ -16,9 +16,9 @@ void opcontrol(){
 
     chassis.arcade(throttle, turn, false, 0.6f);
 
-    // if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R1)){
-    //   Intake::toggle();
-    // }
+    if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R1)){
+      Intake::toggle();
+    }
 
     // if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R2)){
     //   if(Intake::get_hooks() == REV){
