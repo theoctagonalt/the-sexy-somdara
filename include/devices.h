@@ -6,8 +6,6 @@
 
 extern pros::Controller master;
 
-extern pros::Motor long_motor;
-extern pros::Motor center_motor;
 extern pros::Motor intake_motor;
 
 extern lemlib::Chassis chassis;

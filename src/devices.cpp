@@ -1,17 +1,17 @@
 #include "main.h"
 #include "lemlib/api.hpp"
 
-#define LONG_MOTOR -17
-#define CENTER_MOTOR 5
-#define INTAKE_MOTOR 9
+// #define LONG_MOTOR -17 //TO CHANGE
+// #define CENTER_MOTOR 5
+#define INTAKE_MOTOR -11
 
-#define LEFT_FRONT_MOTOR 8
-#define LEFT_BACK_MOTOR -1
-#define LEFT_MIDDLE_MOTOR -7
+#define LEFT_FRONT_MOTOR 20
+#define LEFT_BACK_MOTOR -18
+#define LEFT_MIDDLE_MOTOR -19
 
-#define RIGHT_FRONT_MOTOR -20
-#define RIGHT_BACK_MOTOR 18
-#define RIGHT_MIDDLE_MOTOR 19
+#define RIGHT_FRONT_MOTOR - 17
+#define RIGHT_BACK_MOTOR 15
+#define RIGHT_MIDDLE_MOTOR 16
 
 #define INERTIAL 10
 
@@ -24,8 +24,8 @@ pros::Controller master (pros::E_CONTROLLER_MASTER);
 pros::MotorGroup left_motors ({LEFT_FRONT_MOTOR, LEFT_BACK_MOTOR, LEFT_MIDDLE_MOTOR}, pros::MotorGear::blue);
 pros::MotorGroup right_motors ({RIGHT_FRONT_MOTOR, RIGHT_BACK_MOTOR, RIGHT_MIDDLE_MOTOR}, pros::MotorGear::blue);
 
-pros::Motor long_motor (LONG_MOTOR, pros::MotorGear::green);
-pros::Motor center_motor (CENTER_MOTOR, pros::MotorGear::green);
+// pros::Motor long_motor (LONG_MOTOR, pros::MotorGear::green);
+// pros::Motor center_motor (CENTER_MOTOR, pros::MotorGear::green);
 pros::Motor intake_motor (INTAKE_MOTOR, pros::MotorGear::green);
 
 //pistons
