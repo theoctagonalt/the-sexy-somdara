@@ -4,14 +4,20 @@
 // #define LONG_MOTOR -17 //TO CHANGE
 // #define CENTER_MOTOR 5
 #define INTAKE_MOTOR -11
+#define REDIRECT_MOTOR -12
+#define EXIT_MOTOR 13
 
-#define LEFT_FRONT_MOTOR 20
+#define LEFT_FRONT_MOTOR 8
 #define LEFT_BACK_MOTOR -18
-#define LEFT_MIDDLE_MOTOR -19
+#define LEFT_MIDDLE_MOTOR -20
 
-#define RIGHT_FRONT_MOTOR - 17
-#define RIGHT_BACK_MOTOR 15
+#define RIGHT_FRONT_MOTOR -9
+#define RIGHT_BACK_MOTOR 17
 #define RIGHT_MIDDLE_MOTOR 16
+
+#define COLOUR_SORT 1
+#define MATCHLOADER 2
+#define BLOCKER 3
 
 #define INERTIAL 10
 
@@ -24,17 +30,31 @@ pros::Controller master (pros::E_CONTROLLER_MASTER);
 pros::MotorGroup left_motors ({LEFT_FRONT_MOTOR, LEFT_BACK_MOTOR, LEFT_MIDDLE_MOTOR}, pros::MotorGear::blue);
 pros::MotorGroup right_motors ({RIGHT_FRONT_MOTOR, RIGHT_BACK_MOTOR, RIGHT_MIDDLE_MOTOR}, pros::MotorGear::blue);
 
-// pros::Motor long_motor (LONG_MOTOR, pros::MotorGear::green);
-// pros::Motor center_motor (CENTER_MOTOR, pros::MotorGear::green);
 pros::Motor intake_motor (INTAKE_MOTOR, pros::MotorGear::green);
+pros::Motor redirect_motor (REDIRECT_MOTOR, pros::MotorGear::green);
+pros::Motor exit_motor (EXIT_MOTOR, pros::MotorGear::green);
+
 
 //pistons
+pros::adi::DigitalOut colour_sort (COLOUR_SORT);
+pros::adi::DigitalOut matchloader (MATCHLOADER);
+pros::adi::DigitalOut blocker (BLOCKER);
 
 //sensors
 pros::Imu inertial (INERTIAL);
 
 //lemlib objects
 lemlib::Drivetrain drivetrain (&left_motors, &right_motors, 10.428, lemlib::Omniwheel::NEW_325, 450, 2);
+
+//drive curve
+lemlib::ExpoDriveCurve throttle_curve(10, // joystick deadband out of 127
+                                     15, // minimum output where drivetrain will move out of 127
+                                     1 // expo curve gain
+);
+lemlib::ExpoDriveCurve turn_curve(10, // joystick deadband out of 127
+                                     15, // minimum output where drivetrain will move out of 127
+                                     1.029 // expo curve gain
+);
 
 //rotational
 lemlib::ControllerSettings angular_controller(1.64, //kP
@@ -65,4 +85,4 @@ lemlib::TrackingWheel right_side_imes (&right_motors, lemlib::Omniwheel::NEW_325
 
 lemlib::OdomSensors sensors (&left_side_imes, &right_side_imes, nullptr, nullptr, &inertial);
 
-lemlib::Chassis chassis (drivetrain, lateral_controller, angular_controller, sensors);
+lemlib::Chassis chassis (drivetrain, lateral_controller, angular_controller, sensors, &throttle_curve, &turn_curve);

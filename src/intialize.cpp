@@ -6,6 +6,7 @@ int routine = -1;
 
 void initialize(){
 	pros::lcd::initialize();
+  colour_sort.set_value(0);
 }
 
 void competition_initialize(){

@@ -7,6 +7,12 @@
 extern pros::Controller master;
 
 extern pros::Motor intake_motor;
+extern pros::Motor redirect_motor;
+extern pros::Motor exit_motor;
+
+extern pros::adi::DigitalOut colour_sort;
+extern pros::adi::DigitalOut matchloader;
+extern pros::adi::DigitalOut blocker;
 
 extern lemlib::Chassis chassis;
 #endif

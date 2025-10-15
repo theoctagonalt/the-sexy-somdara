@@ -4,55 +4,64 @@
 #include "globals.h"
 
 namespace Intake{
-  int intake_state = OFF;
-  // int long_state = OFF;
-  // int center_state = OFF;
+  int preroller_state = OFF;
+  int redirect_state = OFF;
+  int exit_state = OFF;
   void toggle(){
-    if(intake_state == FWD){
+    if(preroller_state == FWD){
       set_intake(OFF);
-      // set_long(OFF);
-      // set_center(OFF);
     }else{
       set_intake(FWD);
-      // set_long(FWD);
-      // set_center(FWD);
     }
   }
 
   void set_intake(int state){
     if(state == FWD){
-      intake_motor.move_velocity(200);
-      intake_state = FWD;
+      set_preroller(FWD);
+      set_redirect(FWD);
+      set_exit(FWD);
     }else if(state == REV){
-      intake_motor.move_velocity(-200);
-      intake_state = REV;
+      set_preroller(REV);
+      set_redirect(REV);
+      set_exit(REV);
     }else{
-      intake_motor.move_velocity(0);
-      intake_state = OFF;
+      set_preroller(OFF);
+      set_redirect(OFF);
+      set_exit(OFF);
     }
   }
-  // void set_long(int state){
-  //   if(state == FWD){
-  //     long_motor.move_velocity(200);
-  //     long_state = FWD;
-  //   }else if(state == REV){
-  //     long_motor.move_velocity(-200);
-  //     long_state = REV;
-  //   }else{
-  //     long_motor.move_velocity(0);
-  //     long_state = OFF;
-  //   }
-  // }
-  // void set_center(int state){
-  //   if(state == FWD){
-  //     center_motor.move_velocity(200);
-  //     center_state = FWD;
-  //   }else if(state == REV){
-  //     center_motor.move_velocity(-200);
-  //     center_state = REV;
-  //   }else{
-  //     center_motor.move_velocity(0);
-  //     center_state = OFF;
-  //   }
-  // }
+
+  void set_redirect(int state){
+    if(state == FWD){
+      redirect_motor.move_velocity(200);
+    }else if(state == REV){
+      redirect_motor.move_velocity(-200);
+    }else{
+      redirect_motor.move_velocity(0);
+    }
+    redirect_state = state;
+  }
+  void set_exit(int state){
+    if(state == FWD){
+      exit_motor.move_velocity(200);
+    }else if(state == REV){
+      exit_motor.move_velocity(-200);
+    }else{
+      exit_motor.move_velocity(0);
+    }
+    exit_state = state;
+  }
+  void set_preroller(int state){
+    if(state == FWD){
+      intake_motor.move_velocity(200);
+    }else if(state == REV){
+      intake_motor.move_velocity(-200);
+    }else{
+      intake_motor.move_velocity(0);
+    }
+    preroller_state = state;
+  }
+  int get_preroller(){
+    return preroller_state;
+  }
 }
