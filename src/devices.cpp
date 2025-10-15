@@ -20,6 +20,7 @@
 #define BLOCKER 3
 
 #define INERTIAL 10
+#define COLOUR_SENSOR 4
 
 //sensors: colour sensor, inertial sensor, auton selector?
 
@@ -42,6 +43,7 @@ pros::adi::DigitalOut blocker (BLOCKER);
 
 //sensors
 pros::Imu inertial (INERTIAL);
+pros::Optical colour_sensor (COLOUR_SENSOR);
 
 //lemlib objects
 lemlib::Drivetrain drivetrain (&left_motors, &right_motors, 10.428, lemlib::Omniwheel::NEW_325, 450, 2);
