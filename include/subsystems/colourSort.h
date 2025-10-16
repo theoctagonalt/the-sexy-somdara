@@ -6,6 +6,8 @@ namespace ColourSort {
   void toggle();
   bool get();
   void update_colour_sort();
+  void set_colour(int colour);
+  int get_colour();
 }
 
 #endif

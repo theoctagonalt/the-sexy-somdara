@@ -1,8 +1,10 @@
 #include "main.h"
 #include "globals.h"
 #include "devices.h"
+#include "initialize.h"
 
 int routine = -1;
+int colour = RED;
 
 void initialize(){
 	pros::lcd::initialize();
@@ -17,4 +19,7 @@ void competition_initialize(){
 }
 int get_routine(){
   return routine;
+}
+int get_colour(){
+  return colour;
 }

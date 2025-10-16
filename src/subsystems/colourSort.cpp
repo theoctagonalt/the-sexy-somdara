@@ -5,6 +5,8 @@
 
 namespace ColourSort{
   bool colour_sort_state = false;
+  int target_colour = -1;
+  int timer = 0;
 
   void toggle(){
     colour_sort_state = !colour_sort_state;
@@ -19,10 +21,38 @@ namespace ColourSort{
   }
 
   void update_colour_sort(){
+    int current_colour = -1;
     if(colour_sensor.get_hue() < RED_HUE_MAX && colour_sensor.get_hue() > RED_HUE_MIN){ //if we see red
-      set(EXTENDED); //extend the colour sorter
+      current_colour = RED;
     }else if(colour_sensor.get_hue() < BLUE_HUE_MAX && colour_sensor.get_hue() > BLUE_HUE_MIN){ //if we see blue
-      set(RETRACTED); //retract the colour sorter
+      current_colour = BLUE;
     }
+
+    if(current_colour != target_colour && current_colour != -1 && target_colour !=-1){
+      set(EXTENDED);
+    }else if(current_colour == target_colour && colour_sort_state == EXTENDED){
+      set(RETRACTED);
+    }
+
+    if(current_colour == -1 && colour_sort_state == EXTENDED){
+      if(timer > 50){
+        set(RETRACTED);
+        timer = 0;
+      }
+      timer++;
+    }
+
+    if(target_colour == -1){
+      set(RETRACTED);
+    }
+
+
+  }
+
+  void set_colour(int colour){
+    target_colour = colour;
+  }
+  int get_colour(){
+    return target_colour;
   }
 }

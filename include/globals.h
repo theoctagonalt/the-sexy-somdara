@@ -15,4 +15,8 @@
 #define RETRACTED 0
 #define EXTENDED 1
 
+//colours
+#define RED 0
+#define BLUE 1
+
 #endif

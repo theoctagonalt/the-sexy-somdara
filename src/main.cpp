@@ -1,6 +1,7 @@
 #include "main.h"
 #include "globals.h"
 #include "devices.h"
+#include "initialize.h"
 #include "./subsystems/intake.h"
 #include "./subsystems/blocker.h"
 #include "./subsystems/matchloader.h"
@@ -9,6 +10,7 @@
 
 void opcontrol(){
   int game_time = 0;
+  ColourSort::set_colour(get_colour());
   Intake::set_intake(OFF);
 
   while(true){
@@ -43,13 +45,19 @@ void opcontrol(){
     if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)){ //if we detect a new press of the right button
       Matchloader::toggle(); //toggle the matchloader
     }
-    if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_LEFT)){ //if we detect a new press of the left button
+    if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_Y)){ //if we detect a new press of the Y button
       Blocker::toggle(); //toggle the blocker
     }
-    if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)){ //if we detect a new press of the B button
-      ColourSort::toggle(); //toggle the matchloader
+    if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X)){ //if we detect a new press of the X button
+      ColourSort::toggle(); //toggle the colour sorter
     }
 
+    if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)){ //if we detect a new press of the B button
+      ColourSort::set_colour(!ColourSort::get_colour()); //toggle the target colour
+    }
+    if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)){ 
+      ColourSort::set_colour(-1); 
+    }
     //game
     if(pros::competition::is_connected() && !pros::competition::is_autonomous()){
       game_time++;
