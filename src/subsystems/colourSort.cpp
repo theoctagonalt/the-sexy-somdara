@@ -2,6 +2,7 @@
 #include "main.h"
 #include "devices.h"
 #include "globals.h"
+#include "./subsystems/intake.h"
 
 namespace ColourSort{
   bool colour_sort_state = false;
@@ -28,14 +29,14 @@ namespace ColourSort{
       current_colour = BLUE;
     }
 
-    if(current_colour != target_colour && current_colour != -1 && target_colour !=-1){
+    if(current_colour != target_colour && current_colour != -1 && target_colour !=-1 && Intake::get_preroller() == FWD){
       set(EXTENDED);
     }else if(current_colour == target_colour && colour_sort_state == EXTENDED){
       set(RETRACTED);
     }
 
     if(current_colour == -1 && colour_sort_state == EXTENDED){
-      if(timer > 50){
+      if(timer > 75){
         set(RETRACTED);
         timer = 0;
       }

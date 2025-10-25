@@ -8,7 +8,7 @@
 #define EXIT_MOTOR 13
 
 #define LEFT_FRONT_MOTOR 8
-#define LEFT_BACK_MOTOR -18
+#define LEFT_BACK_MOTOR -15
 #define LEFT_MIDDLE_MOTOR -20
 
 #define RIGHT_FRONT_MOTOR -9
@@ -59,9 +59,9 @@ lemlib::ExpoDriveCurve turn_curve(10, // joystick deadband out of 127
 );
 
 //rotational
-lemlib::ControllerSettings angular_controller(1.64, //kP
+lemlib::ControllerSettings angular_controller(4, //kP
                                               0, //kIx
-                                              0.7, //kD
+                                              15, //kD
                                               7, //anti-windup
                                               0.1, //small error range (in)
                                               1000, //small error timeout (ms)
@@ -71,9 +71,9 @@ lemlib::ControllerSettings angular_controller(1.64, //kP
                                               ); 
 
 //front-back
-lemlib::ControllerSettings lateral_controller(3.5,
-                                             0.1, 
-                                             0.1, 
+lemlib::ControllerSettings lateral_controller(6.5,
+                                             0, 
+                                             5.5, 
                                              5, 
                                              1, 
                                              100, 
@@ -82,9 +82,8 @@ lemlib::ControllerSettings lateral_controller(3.5,
                                              0 //TODO: TUNE SLEW
                                              );
 
-lemlib::TrackingWheel left_side_imes (&left_motors, lemlib::Omniwheel::NEW_325, -5.8525, 400);
-lemlib::TrackingWheel right_side_imes (&right_motors, lemlib::Omniwheel::NEW_325, 5.8525, 400);
-
+lemlib::TrackingWheel left_side_imes (&left_motors, lemlib::Omniwheel::NEW_325, -5.8525, 450);
+lemlib::TrackingWheel right_side_imes (&right_motors, lemlib::Omniwheel::NEW_325, 5.8525, 450);
 lemlib::OdomSensors sensors (&left_side_imes, &right_side_imes, nullptr, nullptr, &inertial);
 
 lemlib::Chassis chassis (drivetrain, lateral_controller, angular_controller, sensors, &throttle_curve, &turn_curve);

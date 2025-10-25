@@ -15,6 +15,7 @@ extern pros::adi::DigitalOut matchloader;
 extern pros::adi::DigitalOut blocker;
 
 extern pros::Optical colour_sensor;
+extern pros::Imu inertial;  
 
 extern lemlib::Chassis chassis;
 #endif

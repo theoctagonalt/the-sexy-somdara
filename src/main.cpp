@@ -12,18 +12,27 @@ void opcontrol(){
   int game_time = 0;
   ColourSort::set_colour(get_colour());
   Intake::set_intake(OFF);
-
+  bool toggle_intake_next = false;
   while(true){
     int throttle = master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
     int turn = master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
 
     ColourSort::update_colour_sort();
-
+    Intake::update_intake();
+    // if(master.get_digital(pros::E_CONTROLLER_DIGITAL_Y)){
+    //   if (throttle > 100){
+    //     throttle *= 0.8;
+    //   }
+    // }
     chassis.arcade(throttle, turn, false, 0.5f);
 
+    if(toggle_intake_next){
+      Intake::toggle();
+      toggle_intake_next = false;
+    }
     if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R1)){ //if we detect a new press of R1
-      Intake::toggle(); //toggle the intake
       Blocker::set(RETRACTED); //always retract the blocker when intaking
+      toggle_intake_next = true;
     }else if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R2)){ //if we detect a new press of R2
       Blocker::set(RETRACTED); //always retract the blocker when outtaking
       if(Intake::get_preroller() == REV){ //if the intake is already outtaking
@@ -37,7 +46,7 @@ void opcontrol(){
       Blocker::set(EXTENDED); //extend the blocker
       Intake::set_intake(FWD); //set the intake to cycle blocks foward
     }else if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)){ //if we detect a new press of L2
-      Blocker::set(RETRACTED); //retract the blocker
+      Blocker::set(EXTENDED); //retract the blocker
       Intake::set_intake(FWD); //set the intake to cycle blocks foward
       Intake::set_exit(REV); //set the exit to outtake
     }
@@ -54,9 +63,11 @@ void opcontrol(){
 
     if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)){ //if we detect a new press of the B button
       ColourSort::set_colour(!ColourSort::get_colour()); //toggle the target colour
+      master.rumble("-"); //rumble to confirm the change
     }
-    if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)){ 
+    if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)){ //turn off colour sort
       ColourSort::set_colour(-1); 
+      master.rumble("--");
     }
     //game
     if(pros::competition::is_connected() && !pros::competition::is_autonomous()){

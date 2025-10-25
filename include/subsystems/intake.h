@@ -7,6 +7,7 @@ namespace Intake{
   void set_redirect(int state);
   void set_exit(int state);
   void set_preroller(int state);
+  void update_intake();
   int get_preroller();
 }
 

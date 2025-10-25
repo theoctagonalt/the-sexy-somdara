@@ -19,4 +19,8 @@
 #define RED 0
 #define BLUE 1
 
+//routes
+#define LEFT_SIDE 0
+#define RIGHT_SIDE 1
+
 #endif
