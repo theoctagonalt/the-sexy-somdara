@@ -7,8 +7,10 @@ namespace Intake{
   int preroller_state = OFF;
   int redirect_state = OFF;
   int exit_state = OFF;
-  int anti_redirect_stall_counter = 0;
-  int anti_exit_stall_counter = 0;
+  int preroller_antistall_counter = 0;
+  int redirect_antistall_counter = 0;
+  int exit_antistall_counter = 0;
+  
   void toggle(){
     if(preroller_state == FWD){
       set_intake(OFF);
@@ -18,28 +20,45 @@ namespace Intake{
   }
 
   void update_intake(){
-    if(redirect_motor.get_actual_velocity() < 50 && redirect_state == FWD){ //if we are intaking and the motor is stalled
-      anti_redirect_stall_counter++;
-      if(anti_redirect_stall_counter > 50){
-        set_redirect(OFF); //stop the redirect
-        redirect_state = 2; //set the state to stalled
-        master.rumble(".");
-        anti_redirect_stall_counter = 0;
+    if((redirect_motor.get_actual_velocity() < 50 && redirect_state == FWD)){ // if we are intaking forwards and the motor is stalled 
+      redirect_antistall_counter++;
+      // give the motor 50 frames to start moving again; account for time taken to accelerate to 50 rpm
+      if(redirect_antistall_counter > 50){
+        set_redirect(OFF); // stop the redirect
+        redirect_state = 0; // set the state to stalled
+        master.rumble("."); // give physical signal
+        redirect_antistall_counter = 0; // reset the counter for future use
       }
-    }else if(redirect_motor.get_actual_velocity() > 50 && redirect_state == FWD){ //if we are intaking and the motor is not stalled
-      anti_redirect_stall_counter = 0; //reset the counter
+    } else if(redirect_motor.get_actual_velocity() > 50 && redirect_state == FWD){ //if we are intaking and the motor is not stalled
+      redirect_antistall_counter = 0; //reset the counter
     }
 
-    if(exit_motor.get_actual_velocity() < 50 && exit_state == FWD){ //if we are intaking and the motor is stalled
-      anti_exit_stall_counter++;
-      if(anti_exit_stall_counter > 50){
-        set_exit(OFF); //stop the exit
-        exit_state = 2; //set the state to stalled
-        master.rumble(".");
-        anti_exit_stall_counter = 0;
+    if((exit_motor.get_actual_velocity() < 50 && exit_state == FWD)){ // if we are intaking forwards and the motor is stalled 
+      exit_antistall_counter++;
+      // give the motor 50 frames to start moving again; account for time taken to accelerate to 50 rpm
+      if(exit_antistall_counter > 50){
+        set_exit(OFF); // stop the exit
+        exit_state = 0; //s et the state to stopped
+        master.rumble("."); // give physical signal
+        exit_antistall_counter = 0; // reset the counter for future use
       }
-    }else if(exit_motor.get_actual_velocity() > 50 && exit_state == FWD){ //if we are intaking and the motor is not stalled
-      anti_exit_stall_counter = 0; //reset the counter
+    } else if(exit_motor.get_actual_velocity() > 50 && exit_state == FWD){ // if we are intaking and the motor is not stalled
+      exit_antistall_counter = 0; // reset the counter
+    }
+
+    if((intake_motor.get_actual_velocity() < 50 && preroller_state == FWD) || preroller_state == STALLED){ //if we are intaking and the motor is stalled
+      preroller_antistall_counter++;
+      if(preroller_antistall_counter > 50){
+        set_preroller(OFF); //stop the preroller
+        preroller_state = STALLED; //set the state to stalled
+        if(!pros::competition::is_autonomous()){
+          master.rumble("."); // stronger rumble in auton to make sure we feel it
+        }
+          if(preroller_antistall_counter > 100){ // cooldown after it has been stopped
+          set_preroller(FWD); //try to start the preroller again after a longer period
+          preroller_antistall_counter = 0;
+        }
+      }
     }
   }
 
@@ -51,7 +70,7 @@ namespace Intake{
     }else if(state == REV){
       set_preroller(REV);
       set_redirect(REV);
-      set_exit(REV);
+      set_exit(FWD);
     }else{
       set_preroller(OFF);
       set_redirect(OFF);

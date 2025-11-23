@@ -8,6 +8,8 @@
 #include "./subsystems/colourSort.h"
 #include "lemlib/api.hpp"
 
+//TODO: Make drivetrain stop @rpm drop
+
 void opcontrol(){
   int game_time = 0;
   ColourSort::set_colour(get_colour());
@@ -24,7 +26,7 @@ void opcontrol(){
     //     throttle *= 0.8;
     //   }
     // }
-    chassis.arcade(throttle, turn, false, 0.5f);
+    chassis.arcade(throttle, turn, false, 0.3f);
 
     if(toggle_intake_next){
       Intake::toggle();
@@ -34,12 +36,15 @@ void opcontrol(){
       Blocker::set(RETRACTED); //always retract the blocker when intaking
       toggle_intake_next = true;
     }else if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R2)){ //if we detect a new press of R2
-      Blocker::set(RETRACTED); //always retract the blocker when outtaking
       if(Intake::get_preroller() == REV){ //if the intake is already outtaking
         Intake::set_intake(OFF); //turn the intake off
       }else{ //if the intake is not outtaking
         Intake::set_intake(REV); //set the intake to outtake
       }
+    }
+
+    if(master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)){ //if we are holding the left button
+      //sense motors and stall certain motors when sense rpm drop (because motor touching long goal) to align to long goal as needed
     }
 
     if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)){ //if we detect a new press of L1

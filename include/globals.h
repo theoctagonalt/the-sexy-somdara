@@ -10,6 +10,7 @@
 #define OFF 0
 #define FWD 1
 #define REV 2
+#define STALLED 3
 
 //piston states
 #define RETRACTED 0
@@ -20,7 +21,11 @@
 #define BLUE 1
 
 //routes
-#define LEFT_SIDE 0
-#define RIGHT_SIDE 1
+#define LEFT_SIDE_QUALS 0
+#define RIGHT_SIDE_QUALS 1
+#define LEFT_SIDE_ELIMS 2
+#define RIGHT_SIDE_ELIMS 3
+#define SKILLS 4
+
 
 #endif

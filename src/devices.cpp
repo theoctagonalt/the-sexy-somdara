@@ -19,7 +19,7 @@
 #define MATCHLOADER 2
 #define BLOCKER 3
 
-#define INERTIAL 10
+#define INERTIAL 7
 #define COLOUR_SENSOR 4
 
 //sensors: colour sensor, inertial sensor, auton selector?
@@ -54,8 +54,8 @@ lemlib::ExpoDriveCurve throttle_curve(10, // joystick deadband out of 127
                                      1 // expo curve gain
 );
 lemlib::ExpoDriveCurve turn_curve(10, // joystick deadband out of 127
-                                     15, // minimum output where drivetrain will move out of 127
-                                     1.029 // expo curve gain
+                                     5, // minimum output where drivetrain will move out of 127
+                                     1.045 // expo curve gain
 );
 
 //rotational
